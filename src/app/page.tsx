@@ -34,12 +34,29 @@ export default async function Home() {
                 )
               }
               <br />
-              <Link
-                href={"/settings"}
-                className="border-2 border-black py-2 px-4 rounded-lg"
-              >
-                Setting
-              </Link>
+              <div>
+                {
+                  user?.role === "admin" ? (
+                    <div className="flex gap-4">
+                      <span>You are an ADMIN</span>
+                      <Link
+                        href={"/admin"}
+                        className="border-2 border-black py-2 px-4 rounded-lg"
+                      >
+                        Admin Page
+                      </Link>
+                    </div>
+                  ) : (
+                    <span>You are an USER</span>
+                  )
+                }
+                <Link
+                  href={"/settings"}
+                  className="border-2 border-black py-2 px-4 rounded-lg"
+                >
+                  Setting
+                </Link>
+              </div>
             </div>
           ))
         }
