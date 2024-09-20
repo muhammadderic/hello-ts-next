@@ -6,5 +6,11 @@ import Google from "next-auth/providers/google"
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   adapter: PrismaAdapter(prisma) as Adapter,
+  callbacks: {
+    session({ session, user }) {
+      session.user.role = user.role;
+      return session;
+    }
+  },
   providers: [Google],
 })

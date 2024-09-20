@@ -1,8 +1,10 @@
+"use client"
+
+import { useSession } from "next-auth/react";
 import SignIn from "./sign-in";
 import SignOut from "./sign-out";
-import getSession from "@/lib/getSession";
 
-const Navbar = async () => {
+const Navbar = () => {
   /* 
   session from auth() value:
   {
@@ -22,8 +24,8 @@ const Navbar = async () => {
     updatedAt: '2024-09-19T18:08:39.299Z'
   }
   */
-  const session = await getSession();
-  const user = session?.user;
+  const session = useSession();
+  const user = session.data?.user;
 
   return (
     <div className="flex justify-between px-8">

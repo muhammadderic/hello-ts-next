@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { updateRole } from "./actions";
+import { useSession } from "next-auth/react";
 
 type SettingPageProps = {
   role: string;
@@ -12,6 +13,8 @@ const SettingPage = ({ role }: SettingPageProps) => {
   const [roleState, setRoleState] = useState<string>(role);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  const session = useSession();
 
   const handleAdminCheckbox = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.checked) {
@@ -43,6 +46,7 @@ const SettingPage = ({ role }: SettingPageProps) => {
     // console.log({ roles });
 
     await updateRole({ role: roleState });
+    session.update();
 
     // Simulate a submit and reset form state
     setTimeout(() => {
