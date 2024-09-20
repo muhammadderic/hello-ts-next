@@ -1,6 +1,6 @@
-import { auth } from "@/auth";
 import SignIn from "./sign-in";
 import SignOut from "./sign-out";
+import getSession from "@/lib/getSession";
 
 const Navbar = async () => {
   /* 
@@ -22,7 +22,7 @@ const Navbar = async () => {
     updatedAt: '2024-09-19T18:08:39.299Z'
   }
   */
-  const session = await auth();
+  const session = await getSession();
   const user = session?.user;
 
   return (

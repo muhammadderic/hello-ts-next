@@ -1,9 +1,9 @@
 import { redirect } from "next/navigation";
-import { auth } from "@/auth";
 import SettingPage from "./SettingPage";
+import getSession from "@/lib/getSession";
 
 const Settings = async () => {
-  const session = await auth();
+  const session = await getSession();
   const user = session?.user;
 
   if (!user) {
