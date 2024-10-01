@@ -3,16 +3,16 @@
 import { useForm, SubmitHandler } from "react-hook-form"
 
 // Define the shape of the form
-interface FormOneInputs {
+interface BasicFormInputs {
   name: string;
   email: string;
 }
 
-const FormOne = () => {
-  const { register, handleSubmit, reset, formState: { errors } } = useForm<FormOneInputs>();
+const BasicForm = () => {
+  const { register, handleSubmit, reset, formState: { errors } } = useForm<BasicFormInputs>();
 
   // Define the submit handler type
-  const onSubmit: SubmitHandler<FormOneInputs> = (data) => {
+  const onSubmit: SubmitHandler<BasicFormInputs> = (data) => {
     console.log(data);
     reset();
   }
@@ -55,4 +55,4 @@ const FormOne = () => {
   )
 }
 
-export default FormOne
+export default BasicForm
