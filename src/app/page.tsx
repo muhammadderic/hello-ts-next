@@ -1,5 +1,14 @@
+// import One from "@/components/One";
+
+import SchemaDef from "@/components/SchemaDef";
+
+// One : Basic Zod Schema Definitions
 export default function Home() {
   return (
-    <h1>Hello Deric</h1>
+    <div>
+      <h1>Zod</h1>
+      {/* <One /> */}
+      <SchemaDef />
+    </div>
   );
 }
