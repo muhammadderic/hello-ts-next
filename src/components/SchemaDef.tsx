@@ -5,12 +5,14 @@ import { useState } from 'react';
 
 // Define Zod schema
 const formSchema = z.object({
-  username: z.string().min(3, 'Username must be at least 3 characters'),
+  username: z.string().min(3, 'Username must be at least 3 characters').transform((val) => val.trim()),
   age: z.number().min(18, 'You must be at least 18 years old'),
 
   // Schema with refine method for custom validation
   password: z.string().min(6, 'Password must be at least 6 characters'),
   confirmPassword: z.string(),
+
+  isAdmin: z.boolean().default(false),  // New boolean field with default value false
 }).refine((data) => data.password === data.confirmPassword, {
   message: "Passwords don't match",
   path: ['confirmPassword'], // This specifies where the error should appear
@@ -29,14 +31,16 @@ export default function SchemaDef() {
     username: '',
     age: '',
     password: '',
-    confirmPassword: ''
+    confirmPassword: '',
+    isAdmin: false,
   });
   const [errors, setErrors] = useState<FormErrors>({});
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value, type, checked } = e.target;
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value,
+      [name]: type === 'checkbox' ? checked : value,  // Handle checkbox for boolean
     });
   };
 
@@ -50,6 +54,7 @@ export default function SchemaDef() {
         age: Number(formData.age),
         password: formData.password,
         confirmPassword: formData.confirmPassword,
+        isAdmin: formData.isAdmin,
       });
       console.log('Valid data:', parsedData);
       setErrors({});
@@ -105,6 +110,19 @@ export default function SchemaDef() {
           onChange={handleChange}
         />
         {errors.confirmPassword && <p>{errors.confirmPassword[0]}</p>}
+      </div>
+
+      {/* isAdmin field */}
+      <div>
+        <label htmlFor="isAdmin">
+          <input
+            type="checkbox"
+            name="isAdmin"
+            checked={formData.isAdmin}
+            onChange={handleChange}
+          />
+          Is Admin
+        </label>
       </div>
 
       <button type="submit">Submit</button>
